@@ -2,23 +2,43 @@ package com.example.test_utility_library;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.Projection;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.VisibleRegion;
+import com.google.maps.android.SphericalUtil;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class Main_Activity extends Activity implements
 		ClusterManager.OnClusterClickListener<MyItem> {
 
 	GoogleMap map;
+	float currentZoom = -1;
 	MapFragment mapFragment;
+	ScaleBar sb;
 	ClusterManager<MyItem> mClusterManager;
+	RelativeLayout relativeLay;
+	MultipleCameraChangeListener mcc;
+	LayoutParams layPar;
+	MapFragment mapF;
 	LatLng base = new LatLng(45.057141, 7.668634);
+	LatLng[] originScale;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +47,73 @@ public class Main_Activity extends Activity implements
 		setUpMapIfNeeded();
 		map = (GoogleMap) ((MapFragment) getFragmentManager().findFragmentById(
 				R.id.map)).getMap();
+		mcc = new MultipleCameraChangeListener();
+
+		mcc.addOnCameraChange(new OnCameraChangeListener() {
+			@Override
+			public void onCameraChange(CameraPosition arg0) {
+				if (arg0.zoom != currentZoom) {
+					currentZoom = arg0.zoom;
+					calculateScale();
+				}
+			}
+		});
+		map.setPadding(0, 242, 0, 0);
+		relativeLay = (RelativeLayout) findViewById(R.id.relativeLayoutControls);
+		sb = new ScaleBar(this);
+		relativeLay.addView(sb);
 		setupCluster();
+		map.setOnCameraChangeListener(mcc);
 		// point.latitude = map.getCameraPosition().target.latitude;
 
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		// super.onWindowFocusChanged(hasFocus);
+		originScale = calculateScale();
+		// map.addMarker(new MarkerOptions().position(originScale[0]));
+		// map.addMarker(new MarkerOptions().position(originScale[1]));
+
+	}
+
+	private float dpToPx(int dpValue) {
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue,
+				getResources().getDisplayMetrics());
+	}
+
+	private LatLng[] calculateScale() {
+		// float pxMargin = dpToPx(50);
+		LatLng originL;
+		LatLng originR;
+
+		VisibleRegion vRegion;
+		int[] coord = new int[2];
+		sb.getLocationOnScreen(coord);
+		vRegion = map.getProjection().getVisibleRegion();
+		// Point farL = map.getProjection().toScreenLocation(vRegion.farLeft);
+		// Point farR = map.getProjection().toScreenLocation(vRegion.farRight);
+		Point pL = new Point(coord[0] + 15, 50);
+		Point pR = new Point(pL.x + 150, pL.y);
+		originL = map.getProjection().fromScreenLocation(pL);
+		originR = map.getProjection().fromScreenLocation(pR);
+		LatLng[] origin = { originL, originR };
+		// Log.i("Distance",Double.toString(SphericalUtil.computeDistanceBetween(originL,
+		// originR)));
+		sb.setScale(Integer.toString((int) SphericalUtil
+				.computeDistanceBetween(originL, originR)));
+		return origin;
 	}
 
 	private void setupCluster() {
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(base, 10));
 		mClusterManager = new ClusterManager<MyItem>(this, getMap());
-		getMap().setOnCameraChangeListener(mClusterManager);
+		mcc.addOnCameraChange(mClusterManager);
 		getMap().setOnMarkerClickListener(mClusterManager);
 		addItems();
 		mClusterManager.setOnClusterClickListener(this);
@@ -79,7 +157,4 @@ public class Main_Activity extends Activity implements
 		return true;
 	}
 
-	private class MyItemClusterAlgorithm extends
-			NonHierarchicalDistanceBasedAlgorithm<MyItem> {
-	}
 }
