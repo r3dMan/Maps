@@ -1,5 +1,11 @@
 <resources>
 
     <string name="app_name">test_utility_library</string>
+    <string name="casaTitle">Casa Rujo</string>
+    <string name="casaBody">Via Nuova, 5, Alminusa, 90020Tel: 0039899\nEmail: rujo@munch.lok</string>
+    <string name="normalMap">Normal</string>
+    <string name="terrainMap">Terrain</string>
+    <string name="hybridMap">Hybrid</string>
+    <string name="location">Locations</string>
 
 </resources>

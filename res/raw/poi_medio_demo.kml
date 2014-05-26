@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Pois</name>
+		<description>POI con info per demo BeCycle da presentare entro il 5/6></description>			
+		<Poi>
+			<name>POI</name>
+			<FreeTime>
+				<category>Museum</category>
+				<description>Museo Paesaggio Sonoro</description>
+				<coordinates>7.8694960000000265,44.98633299999999,0.0</coordinates>
+			</FreeTime>
+			<OnRoute>
+				<category>Cultural asset</category>
+				<description>Torre civica Villanova</description>
+				<coordinates>7.937892771922179,44.942785470018656,0.0</coordinates>
+			</OnRoute>
+			<FreeTime>
+				<category>Museum</category>
+				<description>Museo Del Gesso</description>
+				<coordinates>7.932147999999984,45.067899,0.0</coordinates>
+			</FreeTime>
+			<FreeTime>
+				<category>Restaurant</category>
+				<description>Trattoria Del Freisa</description>
+				<coordinates>7.931812000000036,45.067804,0.0</coordinates>
+			</FreeTime>
+			<FreeTime>
+				<category>Cultural asset</category>
+				<description>Castello Moncucco</description>
+				<coordinates>7.9321664571762085,45.06781128431245,0.0</coordinates>
+			</FreeTime>
+			<OnRoute>
+				<category>Cultural asset</category>
+				<description>Torre Villanova San Martino</description>
+				<coordinates>7.928760051727295,44.92994423497097,0.0</coordinates>
+			</OnRoute>
+			<Logistics>
+				<category>Accomodation</category>
+				<description>Hotel Panorama</description>
+				<coordinates>7.763083300000062,44.9700679,0.0</coordinates>
+			</Logistics>
+			<Logistics>
+				<category>Accomodation</category>
+				<description>Convento S. Domenico</description>
+				<coordinates>7.826096000000007,45.00967,0.0</coordinates>
+			</Logistics>
+			<OnRoute>
+				<category>Restaurant</category>
+				<description>La Contea</description>
+				<coordinates>8.04034999999999,45.0875,0.0</coordinates>
+			</OnRoute>
+			<FreeTime>
+				<category>Restaurant</category>
+				<description>La Gallina Bionda</description>
+					<coordinates>7.956525000000056,44.99888199999999,0.0</coordinates>
+			</FreeTime>
+			<FreeTime>
+				<category>Restaurant</category>
+				<description>Da Esterina Ristorante Piemontese</description>
+				<coordinates>7.81546000000003,45.06941,0.0</coordinates>
+			</FreeTime>
+			<OnRoute>
+				<category>Restaurant</category>
+				<description>Cannon D'Oro</description>
+				<coordinates>8.039750000000026,45.0862126,0.0</coordinates>
+			</OnRoute>
+		</Poi>
+	</Document>
+</kml>

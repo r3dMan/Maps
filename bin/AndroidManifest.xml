@@ -8,6 +8,7 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -22,7 +23,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.Holo.NoActionBar.Fullscreen" >
+        
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -31,7 +33,7 @@
             android:value="AIzaSyAqV2nFv84rveYx3WR-PfFBCLMKiSFuENw" />
 
         <activity
-            android:name="com.example.test_utility_library.Main_Activity"
+            android:name="com.example.test_utility_library.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +41,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.test_utility_library.ScaleCluster" />
+        <activity android:name="com.example.test_utility_library.MapTypeRouteAnimation" 
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
